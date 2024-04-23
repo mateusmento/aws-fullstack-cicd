@@ -3,7 +3,7 @@ import express from 'express';
 import { Server } from 'http';
 
 export class App {
-    server?: Server;
+    private server?: Server;
 
     start() {
         const app = express();
