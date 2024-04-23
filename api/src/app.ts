@@ -31,6 +31,7 @@ export class App {
 
     close() {
         return new Promise<void>((res, rej) => {
+            this.server?.closeAllConnections();
             this.server?.close((err?: Error) => err ? rej(err) : res());
         });
     }
