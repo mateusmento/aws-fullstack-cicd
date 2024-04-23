@@ -4,7 +4,9 @@
   "author": "Mateus Sarmento",
   "license": "ISC",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "test": "jest"
+  },
   "devDependencies": {
     "@types/jest": "^29.5.12",
     "@types/node": "^20.12.7",
