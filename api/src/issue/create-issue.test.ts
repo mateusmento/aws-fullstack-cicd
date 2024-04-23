@@ -1,4 +1,15 @@
 import axios from "axios";
+import { App } from "../app";
+
+const app = new App();
+
+beforeEach(() => {
+    app.start();
+});
+
+afterEach(() => {
+    app.close();
+});
 
 const BASE_URL = "http://localhost:3000";
 
