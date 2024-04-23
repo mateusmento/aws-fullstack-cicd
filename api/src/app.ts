@@ -23,11 +23,15 @@ export class App {
 
     constructor(private app: Express) {}
 
-    start() {
-        this.server = this.app.listen(process.env.PORT ?? 3000);
+    start(port: number = 3000) {
+        return new Promise<void>((res, rej) => {
+            this.server = this.app.listen(process.env.PORT ?? port, res);
+        });
     }
 
     close() {
-        this.server?.close();
+        return new Promise<void>((res, rej) => {
+            this.server?.close((err?: Error) => err ? rej(err) : res());
+        });
     }
 }
