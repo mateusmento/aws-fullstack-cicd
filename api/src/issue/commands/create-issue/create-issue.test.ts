@@ -31,7 +31,7 @@ beforeEach(async () => {
     await dataSource.initialize();
 
     app = new AppBuilder()
-        .withRoutes(createIssueRoute(dataSource))
+        .withRoutes(createIssueRoute(dataSource.getRepository(Issue)))
         .build();
 
     await app.start();

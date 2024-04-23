@@ -1,12 +1,12 @@
 import { Router } from "express";
-import { DataSource } from "typeorm";
+import { Repository } from "typeorm";
 import { Issue } from "../../domain/issue.entity";
 
-function createIssueRoute(dataSource: DataSource) {
+function createIssueRoute(issueRepo: Repository<Issue>) {
     const createIssueRoute = Router();
     
     createIssueRoute.post('/issues', async (req, res) => {
-        const issue = await dataSource.manager.save(Issue, {
+        const issue = await issueRepo.save({
             title: req.body.title
         });
         res.json(issue);
