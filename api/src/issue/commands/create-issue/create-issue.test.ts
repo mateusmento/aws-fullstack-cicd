@@ -1,7 +1,10 @@
 import axios from "axios";
-import { App } from "../../../app";
+import { App, AppBuilder } from "../../../app";
+import createIssueRoute from "./create-issue.route";
 
-const app = new App();
+const app = new AppBuilder()
+    .withRoutes(createIssueRoute)
+    .build();
 
 beforeEach(() => {
     app.start();
