@@ -2,16 +2,17 @@ import axios from "axios";
 import { App, AppBuilder } from "../../../app";
 import createIssueRoute from "./create-issue.route";
 
-const app = new AppBuilder()
+let app: App;
+
+beforeEach(async () => {
+    app = new AppBuilder()
         .withRoutes(createIssueRoute)
         .build();
-
-beforeEach(() => {
-    app.start();
+    await app.start();
 });
 
-afterEach(() => {
-    app.close();
+afterEach(async () => {
+    await app.close();
 });
 
 const BASE_URL = "http://localhost:3000";
