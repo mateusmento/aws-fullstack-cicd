@@ -1,18 +1,28 @@
 import axios from "axios";
 import { App, AppBuilder } from "../../../app";
 import createIssueRoute from "./create-issue.route";
+import { PostgreSqlContainer, StartedPostgreSqlContainer } from '@testcontainers/postgresql';
 
 let app: App;
+let database: StartedPostgreSqlContainer;
 
 beforeEach(async () => {
+    database = await new PostgreSqlContainer('postgres:14')
+        .withDatabase('test')
+        .withUsername('test')
+        .withPassword('test')
+        .start();
+
     app = new AppBuilder()
         .withRoutes(createIssueRoute)
         .build();
+
     await app.start();
 });
 
 afterEach(async () => {
     await app.close();
+    await database.stop();
 });
 
 const BASE_URL = "http://localhost:3000";
