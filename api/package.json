@@ -4,5 +4,8 @@
   "author": "Mateus Sarmento",
   "license": "ISC",
   "main": "index.js",
-  "scripts": {}
+  "scripts": {},
+  "devDependencies": {
+    "typescript": "^5.4.5"
+  }
 }
