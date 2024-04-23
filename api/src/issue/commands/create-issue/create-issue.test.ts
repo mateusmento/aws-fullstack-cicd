@@ -2,9 +2,12 @@ import axios from "axios";
 import { App, AppBuilder } from "../../../app";
 import createIssueRoute from "./create-issue.route";
 import { PostgreSqlContainer, StartedPostgreSqlContainer } from '@testcontainers/postgresql';
+import { DataSource } from "typeorm";
+import { Issue } from "../../domain/issue.entity";
 
 let app: App;
 let database: StartedPostgreSqlContainer;
+let dataSource: DataSource;
 
 beforeEach(async () => {
     database = await new PostgreSqlContainer('postgres:14')
@@ -13,8 +16,22 @@ beforeEach(async () => {
         .withPassword('test')
         .start();
 
+    dataSource = new DataSource({
+        type: 'postgres',
+        host: database.getHost(),
+        port: database.getPort(),
+        username: database.getUsername(),
+        password: database.getPassword(),
+        logging: false,
+        logger: 'advanced-console',
+        synchronize: true,
+        entities: [Issue]
+    });
+
+    await dataSource.initialize();
+
     app = new AppBuilder()
-        .withRoutes(createIssueRoute)
+        .withRoutes(createIssueRoute(dataSource))
         .build();
 
     await app.start();
